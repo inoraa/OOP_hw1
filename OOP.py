@@ -40,6 +40,15 @@ class Mentor:
 
 
 class Lecturer(Mentor):
+
+    def __lt__(self, other):
+        x = sum(self.grades.values())
+        y = sum(other.grades.values())
+        if x < y:
+            return other
+        else:
+            return self
+
     def rate_hw(self, lector, course, grade):
         if isinstance(lector, Lecturer):
             if course in lector.grades:
@@ -85,36 +94,20 @@ best_reviewer.rate_hw(best_student_2, 'Python', 7)
 best_lecturer_1 = Lecturer('Vlad', 'Dolmatov')
 best_lecturer_2 = Lecturer('Kseniya', 'Andreeva')
 
-best_student_1.rate_lecturer(best_lecturer_1, 'GIT', 9.9)
-best_student_2.rate_lecturer(best_lecturer_2, 'GIT', 1)
+best_student_1.rate_lecturer(best_lecturer_1, 'GIT', 8)
+best_student_2.rate_lecturer(best_lecturer_2, 'GIT', 10)
 
-print(best_reviewer)
-print()
-print(best_lecturer_1)
-print()
-print(best_student_1)
+# print(best_reviewer)
+# print()
+# print(best_lecturer_1)
+# print()
+# print(best_student_1)
 
 list_lecturer = [best_lecturer_1, best_lecturer_2]
 list_student = [best_student_1, best_student_2]
 
-
-def rate_college(colleges):
-    name_1 = colleges[0].surname
-    name_2 = colleges[1].surname
-
-    average_grade = {}
-    for l in colleges:
-        average_grade[l.surname] = [v for k, v in l.grades.items()]
-    print(average_grade)
-    if sum(average_grade[name_1]) > sum(average_grade[name_2]):
-        print(name_1, *average_grade[name_1])
-    else:
-        print(name_2, *average_grade[name_2])
-
-
-rate_college(list_lecturer)
-rate_college(list_student)
-
+is_it = (best_lecturer_1 < best_lecturer_2)
+print(is_it)
 
 def rate_homework(list_lecturer, courses):
     average_grade = []
