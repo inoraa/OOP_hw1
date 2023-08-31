@@ -1,6 +1,5 @@
 def load_cook_book(file_path):
     cook_book = {}
-
     with open(file_path, 'r', encoding='utf-8') as file:
         while True:
             dish_name = file.readline().strip()
@@ -20,10 +19,9 @@ def load_cook_book(file_path):
                 ingredients.append(ingredient)
 
             cook_book[dish_name] = ingredients
-            file.readline()  # Пустая строка между блюдами
+            file.readline()
 
     return cook_book
-
 
 def get_shop_list_by_dishes(dishes, person_count, cook_book):
     shop_list = {}
@@ -42,7 +40,6 @@ def get_shop_list_by_dishes(dishes, person_count, cook_book):
                     shop_list[ingredient_name]['quantity'] += ingredient['quantity'] * person_count
 
     return shop_list
-
 
 cook_book = load_cook_book('cookbook.txt')
 result = get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2, cook_book)
