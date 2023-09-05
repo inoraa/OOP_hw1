@@ -20,7 +20,7 @@ with open('3.txt', 'r', encoding='utf-8') as f:
 max_len = (len(file_1), len(file_2), len(file_3))
 print(max_len)
 
-with open('newfile.txt', 'w', encoding='utf-8') as f_combined:
+with open('combined.txt', 'w', encoding='utf-8') as f_combined:
     f_combined.write('This is a first article' + '\n')
     f_combined.write('Total lines: ' + str(len(file_1)) + '\n')
     f_combined.writelines(file_1)
