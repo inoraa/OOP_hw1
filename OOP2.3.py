@@ -1,40 +1,26 @@
 import os
 
 base_path = os.getcwd()
-path_first = '1.txt'
-path_second = '2.txt'
-path_third = '3.txt'
-full_path_first = os.path.join(base_path, path_first)
-full_path_second = os.path.join(base_path, path_second)
-full_path_third = os.path.join(base_path, path_third)
+output_file = 'OOP txtfile/combined.txt'
 
-with open('1.txt', 'r', encoding='utf-8') as f:
-    file_1 = f.readlines()
+file_list = [filename for filename in os.listdir(base_path) if filename.endswith('.txt')]
+file_len = {}
+for filename in file_list:
+    full_path = os.path.join(base_path, filename)
 
-with open('2.txt', 'r', encoding='utf-8') as f:
-    file_2 = f.readlines()
+    with open(full_path, 'r', encoding='utf-8') as f:
+        file_contents = f.read()
+        file_len[filename] = len(file_contents)
 
-with open('3.txt', 'r', encoding='utf-8') as f:
-    file_3 = f.readlines()
+file_len_sort = sorted(file_len.items(), key=lambda x: x[1], reverse=True)
 
-max_len = (len(file_1), len(file_2), len(file_3))
-print(max_len)
+with open(output_file, 'w', encoding='utf-8') as f_combined:
+    for filename, _ in file_len_sort:
+        full_path = os.path.join(base_path, filename)
 
-with open('combined.txt', 'w', encoding='utf-8') as f_combined:
-    f_combined.write('This is a first article' + '\n')
-    f_combined.write('Total lines: ' + str(len(file_1)) + '\n')
-    f_combined.writelines(file_1)
-    f_combined.write('\n')
-
-with open('combined.txt', 'a', encoding='utf-8') as f_combined:
-    f_combined.write('This is a second article' + '\n')
-    f_combined.write('Total lines: ' + str(len(file_2)) + '\n')
-    f_combined.writelines(file_2)
-    f_combined.write('\n')
-    f_combined.write('\n')
-
-with open('result_file.txt', 'a', encoding='utf-8') as f_combined:
-    f_combined.write('This is a third article' + '\n')
-    f_combined.write('Total lines: ' + str(len(file_3)) + '\n')
-    f_combined.writelines(file_3)
-    f_combined.write('\n')
+        with open(filename, 'r', encoding='utf-8') as f:
+            file_contents = f.read()
+            f_combined.write(f'Содержимое {filename}\n')
+            f_combined.write(f'Всего строк: {len(file_contents.splitlines())}\n')
+            f_combined.write(file_contents)
+            f_combined.write('\n')
